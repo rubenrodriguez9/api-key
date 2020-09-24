@@ -1,3 +1,5 @@
+const key = require('./key')
+
 // Use any ONE of these API's that needs an API key to get data.
 // Read the docs to see how to call for and get the data that you want
 // Or you can use one of your choosing if you are comfortable, HOWEVER it must require an API Key
@@ -5,6 +7,25 @@
 // You can add your own spin to the data in how you present it.
 // Use any tools we've practiced such as promises, destructuring, etc.
 // Once everything works, upload the file and submit.
+
+//*************************** API used "https://allsportsapi.com/" **************************************/
+
+console.log('Please choose from the following matches:')
+
+const fetch = require('node-fetch');
+let url = `https://allsportsapi.com/api/basketball/?met=Livescore&APIkey=${key}`
+fetch(url)
+.then(x => x.json())
+.then(newData => {
+    let arr = newData.result
+    let matchups = arr.map(x => `${x.event_home_team} vs ${x.event_away_team}`)
+
+    matchups.forEach(element => {
+        console.log(element)
+    });
+})
+
+
 
 
 // // Weather API- https://openweathermap.org/api
