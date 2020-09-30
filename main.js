@@ -40,7 +40,7 @@ fetch(url)
     })
 
     
-rl.question(`Key in a number to choose your matchup:\n`,  x=> {
+rl.question(`To choose a score, key in the adjacent number to choose your matchup:\n`,  x=> {
     
     if(x < newArr.length){
         console.log(newArr[x].event_final_result)
