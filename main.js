@@ -15,36 +15,41 @@ const rl = readline.createInterface({
 //*************************** API used "https://allsportsapi.com/" **************************************/
 
 
-let matchups = `Please choose a matchup :\n
-    
-`
+
+
 
 const fetch = require('node-fetch');
 
 let url = `https://allsportsapi.com/api/basketball/?met=Livescore&APIkey=${key}`
 
-let callMatchups = function(url){
+let newArr;
+
+
+fetch(url)
+.then(x => x.json())
+.then(newData => {
+    let arr = newData.result
+    let matchups = arr.map((x, i)=> console.log( `${i}. ${x.event_home_team} vs ${x.event_away_team}`))
+     newArr = newData.result;
+
+    //    for(let i = 0;i < matchups.length; i++){
+    //         console.log(`${i}. ${matchups[i]}`)
+
+    // }
+    
+    })
 
     
-    fetch(url)
-    .then(x => x.json())
-    .then(newData => {
-        let arr = newData.result
-        let matchups = arr.map(x => `${x.event_home_team} vs ${x.event_away_team}`)
-        
-           for(let i = 0;i < matchups.length; i++){
-                console.log(`${i}. ${matchups[i]}`)
+rl.question(`Key in a number to choose your matchup:\n`,  x=> {
     
-        }
-    
-        }).then(() =>  process.exit())
-       
-}
+    if(x < newArr.length){
+        console.log(newArr[x].event_final_result)
+        rl.close()
+    }
+})
 
 
 
 
-rl.question('Choose your match',callMatchups(url))
-    
 
     
