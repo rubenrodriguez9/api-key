@@ -1,5 +1,9 @@
 const key = require('./key')
-
+const readline = require("readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 // Use any ONE of these API's that needs an API key to get data.
 // Read the docs to see how to call for and get the data that you want
 // Or you can use one of your choosing if you are comfortable, HOWEVER it must require an API Key
@@ -10,39 +14,37 @@ const key = require('./key')
 
 //*************************** API used "https://allsportsapi.com/" **************************************/
 
-console.log('Please choose from the following matches:')
+
+let matchups = `Please choose a matchup :\n
+    
+`
 
 const fetch = require('node-fetch');
+
 let url = `https://allsportsapi.com/api/basketball/?met=Livescore&APIkey=${key}`
-fetch(url)
-.then(x => x.json())
-.then(newData => {
-    let arr = newData.result
-    let matchups = arr.map(x => `${x.event_home_team} vs ${x.event_away_team}`)
 
-    matchups.forEach(element => {
-        console.log(element)
-    });
-})
+let callMatchups = function(url){
 
-
-
-
-// // Weather API- https://openweathermap.org/api
-// // Weather/Air Quality API-  https://www.airvisual.com/dashboard/api
-// // Recipe API- https://developer.edamam.com/ (uses two key code)
-// // Superheroes API- https://superheroapi.com/index.html
-// // Movies API- https://www.omdbapi.com/
-// // Sports API - https://www.thesportsdb.com/api/v1/json/1/searchteams.php?t=Arsenal
-// // News API - https://newsapi.org/
-// // Harvard Art Museum API - https://www.harvardartmuseums.org/collections/api
+    
+    fetch(url)
+    .then(x => x.json())
+    .then(newData => {
+        let arr = newData.result
+        let matchups = arr.map(x => `${x.event_home_team} vs ${x.event_away_team}`)
+        
+           for(let i = 0;i < matchups.length; i++){
+                console.log(`${i}. ${matchups[i]}`)
+    
+        }
+    
+        }).then(() =>  process.exit())
+       
+}
 
 
-// If you want to make your project a little more robust and dynamic you could use tools like the ones below:
-// Read the docs to see how it works. Not hard.
 
 
-// Readline: https://nodejs.org/api/readline.html
-// OR
-// Inquirer: https://www.npmjs.com/package/inquirer
-// Read the docs to find out how to use. Pretty intuitive.
+rl.question('Choose your match',callMatchups(url))
+    
+
+    
